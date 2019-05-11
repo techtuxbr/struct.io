@@ -1,6 +1,8 @@
 package structio;
 
-class Queue<T>{
+import structio.interfaces.IDataStructure;
+
+class Queue<T> implements IDataStructure<T>{
 
     private var queue:Array<T>;
     private var length:Int;
@@ -49,5 +51,24 @@ class Queue<T>{
 
     public function next() {
         return this.queue[this.inter++];
+    }
+
+    /* IDataStructure implementations*/
+    public function forEach(forEachFunction:T->Void):IDataStructure<T>{
+        for(element in this.queue){
+            forEachFunction(element);
+        }
+        return this;
+    }
+
+    public function first(firstFunction:T->Bool):T{
+        var element:T = null;
+        for(i in 0...this.queue.length){
+            if(firstFunction(this.queue[i])){
+                element = this.queue[i];
+                break;
+            }
+        }
+        return element;
     }
 }
